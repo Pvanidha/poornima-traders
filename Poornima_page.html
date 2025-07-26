@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>பூர்ணிமா வர்த்தகர்ஸ் (Poornima Traders) - விலை பட்டியல்</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 0;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      padding: 40px 20px;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: auto;
+      background: white;
+      padding: 0;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+
+    .sticky-header {
+      position: sticky;
+      top: 0;
+      background: white;
+      z-index: 2;
+      padding: 15px 30px;
+      margin-bottom: 0;
+      border-bottom: 2px solid #eee;
+    }
+
+    h2 {
+      margin: 0;
+      padding: 0;
+    }
+
+    table {
+      padding: 0 30px;
+      width: calc(100% - 60px);  /* Adjust for padding */
+      margin: 0 auto 30px;
+    }
+
+    thead {
+      position: sticky;
+      top: 65px;  /* Adjusted to account for header height */
+      background: white;
+      z-index: 1;
+    }
+
+    th, td {
+      border: 1px solid #ccc;
+      padding: 8px 10px;
+      text-align: left;
+    }
+    th {
+      background-color: #f2f2f2;
+      white-space: nowrap;  /* Prevent header text wrapping */
+    }
+    select {
+      padding: 6px;
+      width: 60px;
+    }
+    .gingily-oil {
+      background-color: #fff3e6;
+    }
+    .groundnut-oil {
+      background-color: #e6ffe6;
+    }
+    .coconut-oil {
+      background-color: #e6f3ff;
+    }
+    .deepam-oil {
+      background-color: #ffe6e6;
+    }
+    .mustard-oil {
+      background-color: #fff5e6;
+    }
+    .ghee {
+      background-color: #f9f9e6;
+    }
+    .tamarind {
+      background-color: #ffe6ff;
+    }
+    .appalam {
+      background-color: #e6fff2;
+    }
+    .sugar {
+      background-color: #f2e6ff;
+    }
+    .tea {
+      background-color: #ffe6f2;
+    }
+    .order-btn {
+      display: block;
+      margin: 20px auto;
+      padding: 12px 24px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .order-btn:hover {
+      background-color: #45a049;
+    }
+    .order-options {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      margin: 20px;
+    }
+    .whatsapp-btn {
+      background-color: #25d366;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      padding: 12px 24px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .whatsapp-btn:hover {
+      background-color: #128C7E;
+    }
+    .modal {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.2);
+      max-width: 400px;
+      width: 90%;
+      z-index: 1000;
+    }
+    .modal-content {
+      white-space: pre-line;
+      margin: 15px 0;
+    }
+    .close-btn {
+      float: right;
+      cursor: pointer;
+      padding: 5px 10px;
+      background: #f44336;
+      color: white;
+      border: none;
+      border-radius: 4px;
+    }
+    .admin-link {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      padding: 10px;
+      background: #2c3e50;
+      color: white;
+      text-decoration: none;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+    .customer-info {
+      padding: 0 30px;
+      margin: 20px 0;
+    }
+    
+    .customer-info input {
+      width: 100%;
+      padding: 8px;
+      margin: 8px 0;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+    
+    .customer-info label {
+      font-weight: bold;
+      color: #333;
+    }
+  </style>
+  <script>
+    window.onload = function() {
+      // Existing select population code
+      const selects = document.querySelectorAll('select');
+      selects.forEach(select => {
+        // Add default option
+        const defaultOption = document.createElement('option');
+        defaultOption.value = "0";
+        defaultOption.text = "0";
+        select.appendChild(defaultOption);
+        
+        // Add options 1-50
+        for(let i = 1; i <= 50; i++) {
+          const option = document.createElement('option');
+          option.value = i;
+          option.text = i;
+          select.appendChild(option);
+        }
+      });
+    };
+
+    function placeOrder() {
+      // Get customer details
+      const mobile = document.getElementById('customerMobile').value;
+      const address = document.getElementById('customerAddress').value;
+
+      if (!mobile || !address) {
+        alert('Please enter mobile number and delivery address');
+        return;
+      }
+
+      if (mobile.length !== 10 || !/^\d+$/.test(mobile)) {
+        alert('Please enter a valid 10-digit mobile number');
+        return;
+      }
+
+      // Rest of order collection code
+      const table = document.querySelector('table');
+      let orderList = '';
+      let hasItems = false;
+      let totalAmount = 0;
+
+      // Get next order ID from localStorage
+      const lastOrderId = parseInt(localStorage.getItem('lastOrderId') || '0');
+      const newOrderId = lastOrderId + 1;
+
+      // Collect selected items
+      table.querySelectorAll('tr').forEach((row, index) => {
+        if (index === 0) return;
+        
+        const quantity = row.querySelector('select').value;
+        if (quantity > 0) {
+          hasItems = true;
+          const product = row.querySelectorAll('td')[1].textContent;
+          const price = parseInt(row.querySelectorAll('td')[3].textContent);
+          const itemTotal = price * parseInt(quantity);
+          totalAmount += itemTotal;
+          orderList += `${quantity} × ${product}\n`;
+        }
+      });
+
+      if (!hasItems) {
+        alert('Please select items');
+        return;
+      }
+
+      // Show order confirmation with new ID
+      const orderDetails = document.getElementById('orderDetails');
+      orderDetails.textContent = 
+        `Order #${String(newOrderId).padStart(3, '0')}\n` +
+        `Date: ${new Date().toLocaleDateString()}\n` +
+        `Time: ${new Date().toLocaleTimeString()}\n\n` +
+        `Mobile: ${mobile}\n` +
+        `Address: ${address}\n\n` +
+        orderList + 
+        `\nTotal Amount: ₹${totalAmount}`;
+
+      document.getElementById('orderModal').style.display = 'block';
+      
+      // Save order with new ID
+      const orders = JSON.parse(localStorage.getItem('orders') || '[]');
+      orders.push({
+        id: newOrderId,
+        date: new Date(),
+        items: orderList,
+        total: totalAmount,
+        mobile: mobile,
+        address: address
+      });
+
+      // Save both order and new ID
+      localStorage.setItem('orders', JSON.stringify(orders));
+      localStorage.setItem('lastOrderId', newOrderId.toString());
+      
+      resetForm();
+    }
+
+    function closeModal() {
+      document.getElementById('orderModal').style.display = 'none';
+    }
+
+    function resetForm() {
+      // Reset all select elements to 0
+      document.querySelectorAll('select').forEach(select => {
+        select.value = "0";
+      });
+    }
+  </script>
+</head>
+<body>
+  <div class="container">
+    <div class="sticky-header">
+      <h2>பூர்ணிமா வர்த்தகர்ஸ் (Poornima Traders) – விலை பட்டியல் (Price List)</h2>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>S.No</th>
+          <th>பொருட்கள் (Product)</th>
+          <th>MRP (₹)</th>
+          <th>விலை (Price) (₹)</th>
+          <th>எண்ணிக்கை (Quantity)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="gingily-oil"><td>1</td><td>நல்லெண்ணெய் (Gingily Oil) – 5 Lt Cane</td><td>2000</td><td>1450</td><td><select></select></td></tr>
+        <tr class="gingily-oil"><td>2</td><td>நல்லெண்ணெய் (Gingily Oil) – 1 Lt Cane</td><td>420</td><td>300</td><td><select></select></td></tr>
+        <tr class="gingily-oil"><td>3</td><td>நல்லெண்ணெய் (Gingily Oil) – 1/2 Lt Cane</td><td>220</td><td>160</td><td><select></select></td></tr>
+        <tr class="gingily-oil"><td>4</td><td>நல்லெண்ணெய் (Gingily Oil) – 200 ML Pet</td><td>90</td><td>70</td><td><select></select></td></tr>
+
+        <tr class="groundnut-oil"><td>5</td><td>கடலை எண்ணெய் (Groundnut Oil) – 5 Lt Cane</td><td>1500</td><td>1100</td><td><select></select></td></tr>
+        <tr class="groundnut-oil"><td>6</td><td>கடலை எண்ணெய் (Groundnut Oil) – 1 Lt Cane</td><td>320</td><td>210</td><td><select></select></td></tr>
+        <tr class="groundnut-oil"><td>7</td><td>கடலை எண்ணெய் (Groundnut Oil) – 1/2 Lt Cane</td><td>160</td><td>110</td><td><select></select></td></tr>
+
+        <tr class="coconut-oil"><td>8</td><td>தேங்காய் எண்ணெய் (Coconut Oil) – 1 Lt Cane</td><td>450</td><td>350</td><td><select></select></td></tr>
+        <tr class="coconut-oil"><td>9</td><td>தேங்காய் எண்ணெய் (Coconut Oil) – 1/2 Lt Cane</td><td>250</td><td>180</td><td><select></select></td></tr>
+        <tr class="coconut-oil"><td>10</td><td>தேங்காய் எண்ணெய் (Coconut Oil) – 200 ML Pet</td><td>90</td><td>70</td><td><select></select></td></tr>
+
+        <tr class="deepam-oil"><td>11</td><td>தீபம் எண்ணெய் (Deepam Oil) – 1 Lt Cane</td><td>250</td><td>180</td><td><select></select></td></tr>
+        <tr class="deepam-oil"><td>12</td><td>தீபம் எண்ணெய் (Deepam Oil) – 1/2 Lt Cane</td><td>150</td><td>120</td><td><select></select></td></tr>
+
+        <tr class="mustard-oil"><td>13</td><td>கடுகு எண்ணெய் (Mustard Oil) – 200 ML Pet</td><td>80</td><td>60</td><td><select></select></td></tr>
+
+        <tr class="ghee"><td>14</td><td>பசு நெய் (Cow Ghee) – 1 KG</td><td>650</td><td>550</td><td><select></select></td></tr>
+        <tr class="ghee"><td>15</td><td>பசு நெய் (Cow Ghee) – 1/2 KG</td><td>350</td><td>300</td><td><select></select></td></tr>
+        <tr class="ghee"><td>16</td><td>பசு நெய் (Cow Ghee) – 250 Gram</td><td>180</td><td>160</td><td><select></select></td></tr>
+
+        <tr class="tamarind"><td>17</td><td>புளி (Tamarind) – 1 KG</td><td>240</td><td>160</td><td><select></select></td></tr>
+        <tr class="tamarind"><td>18</td><td>புளி (Tamarind) – 1/2 KG</td><td>140</td><td>90</td><td><select></select></td></tr>
+        <tr class="tamarind"><td>19</td><td>புளி (Tamarind) – 250 Gram</td><td>80</td><td>40</td><td><select></select></td></tr>
+
+        <tr class="appalam"><td>20</td><td>அப்பளம் (Appalam) – 1 KG</td><td>450</td><td>180</td><td><select></select></td></tr>
+        <tr class="appalam"><td>21</td><td>அப்பளம் (Appalam) – 1/2 KG</td><td>250</td><td>90</td><td><select></select></td></tr>
+        <tr class="appalam"><td>22</td><td>அப்பளம் (Appalam) – 100 Gram</td><td>45</td><td>18</td><td><select></select></td></tr>
+
+        <tr class="sugar"><td>23</td><td>நாட்டு சர்க்கரை (Country Sugar) – 1 KG</td><td>120</td><td>75</td><td><select></select></td></tr>
+        <tr class="sugar"><td>24</td><td>நாட்டு சர்க்கரை (Country Sugar) – 1/2 KG</td><td>60</td><td>38</td><td><select></select></td></tr>
+
+        <tr class="tea"><td>25</td><td>வால்பாறை தேயிலை தூள் (Valparai Tea Powder) – 1/2 KG</td><td>195</td><td>170</td><td><select></select></td></tr>
+        <tr class="tea"><td>26</td><td>வால்பாறை தேயிலை தூள் (Valparai Tea Powder) – 100 Gram</td><td>90</td><td>40</td><td><select></select></td></tr>
+      </tbody>
+    </table>
+    <div class="customer-info">
+      <div>
+          <label for="customerMobile">Mobile Number *</label>
+          <input type="tel" id="customerMobile" maxlength="10" pattern="[0-9]{10}" required placeholder="Enter 10-digit mobile number">
+      </div>
+      <div>
+          <label for="customerAddress">Delivery Address *</label>
+          <input type="text" id="customerAddress" required placeholder="Enter delivery address">
+      </div>
+    </div>
+    <div class="order-options">
+      <button class="order-btn" onclick="placeOrder()">Place Order</button>
+    </div>
+  </div>
+
+  <!-- Add this before closing body tag -->
+  <div id="orderModal" class="modal">
+    <button class="close-btn" onclick="closeModal()">×</button>
+    <h3>Order Confirmed!</h3>
+    <div id="orderDetails" class="modal-content"></div>
+  </div>
+  <a href="orders.html" class="admin-link">View Orders</a>
+</body>
+</html>
