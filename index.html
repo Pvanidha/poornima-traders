@@ -40,13 +40,13 @@
 
     table {
       padding: 0 30px;
-      width: calc(100% - 60px);  /* Adjust for padding */
+      width: calc(100% - 60px);
       margin: 0 auto 30px;
     }
 
     thead {
       position: sticky;
-      top: 65px;  /* Adjusted to account for header height */
+      top: 65px;
       background: white;
       z-index: 1;
     }
@@ -58,7 +58,7 @@
     }
     th {
       background-color: #f2f2f2;
-      white-space: nowrap;  /* Prevent header text wrapping */
+      white-space: nowrap;
     }
     select {
       padding: 6px;
@@ -122,9 +122,24 @@
       padding: 12px 24px;
       font-size: 16px;
       cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
     .whatsapp-btn:hover {
       background-color: #128C7E;
+    }
+    .cancel-btn {
+      background-color: #6c757d;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      padding: 12px 24px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .cancel-btn:hover {
+      background-color: #5a6268;
     }
     .modal {
       display: none;
@@ -182,19 +197,32 @@
       font-weight: bold;
       color: #333;
     }
+
+    .modal-buttons {
+      display: flex;
+      gap: 10px;
+      margin-top: 15px;
+      justify-content: center;
+    }
+
+    .whatsapp-modal {
+      background: #f0f8f0;
+      border-left: 4px solid #25d366;
+    }
   </style>
   <script>
+    // Fixed WhatsApp number for all messages
+    const WHATSAPP_NUMBER = "919790355960";
+
     window.onload = function() {
-      // Existing select population code
+      // Populate select options
       const selects = document.querySelectorAll('select');
       selects.forEach(select => {
-        // Add default option
         const defaultOption = document.createElement('option');
         defaultOption.value = "0";
         defaultOption.text = "0";
         select.appendChild(defaultOption);
         
-        // Add options 1-50
         for(let i = 1; i <= 50; i++) {
           const option = document.createElement('option');
           option.value = i;
@@ -219,28 +247,29 @@
         return;
       }
 
-      // Rest of order collection code
+      // Collect order details
       const table = document.querySelector('table');
       let orderList = '';
       let hasItems = false;
       let totalAmount = 0;
 
-      // Get next order ID from localStorage
       const lastOrderId = parseInt(localStorage.getItem('lastOrderId') || '0');
       const newOrderId = lastOrderId + 1;
 
-      // Collect selected items
       table.querySelectorAll('tr').forEach((row, index) => {
-        if (index === 0) return;
+        if (index === 0) return; // Skip header row
         
-        const quantity = row.querySelector('select').value;
-        if (quantity > 0) {
-          hasItems = true;
-          const product = row.querySelectorAll('td')[1].textContent;
-          const price = parseInt(row.querySelectorAll('td')[3].textContent);
-          const itemTotal = price * parseInt(quantity);
-          totalAmount += itemTotal;
-          orderList += `${quantity} × ${product}\n`;
+        const select = row.querySelector('select');
+        if (select) {
+          const quantity = select.value;
+          if (quantity && quantity !== "0" && parseInt(quantity) > 0) {
+            hasItems = true;
+            const product = row.querySelectorAll('td')[1].textContent;
+            const price = parseInt(row.querySelectorAll('td')[3].textContent);
+            const itemTotal = price * parseInt(quantity);
+            totalAmount += itemTotal;
+            orderList += `${quantity} × ${product} - ₹${itemTotal}\n`;
+          }
         }
       });
 
@@ -249,47 +278,63 @@
         return;
       }
 
-      // Show order confirmation with new ID
+      // Store current order details globally for WhatsApp
+      window.currentOrder = {
+        id: newOrderId,
+        mobile: mobile,
+        address: address,
+        items: orderList,
+        total: totalAmount,
+        date: new Date().toLocaleDateString(),
+        time: new Date().toLocaleTimeString()
+      };
+
+      // Show order confirmation modal
       const orderDetails = document.getElementById('orderDetails');
       orderDetails.textContent = 
-        `Order #${String(newOrderId).padStart(3, '0')}\n` +
-        `Date: ${new Date().toLocaleDateString()}\n` +
-        `Time: ${new Date().toLocaleTimeString()}\n\n` +
-        `Mobile: ${mobile}\n` +
-        `Address: ${address}\n\n` +
-        orderList + 
-        `\nTotal Amount: ₹${totalAmount}`;
+        `🛍️ Order #${String(newOrderId).padStart(3, '0')}\n` +
+        `📅 ${window.currentOrder.date} ${window.currentOrder.time}\n\n` +
+        `👤 Customer: ${mobile}\n` +
+        `📍 Address: ${address}\n\n` +
+        `📦 Items:\n${orderList}\n` +
+        `💰 Total: ₹${totalAmount}`;
 
       document.getElementById('orderModal').style.display = 'block';
       
-      // Save order with new ID
+      // Save order
       const orders = JSON.parse(localStorage.getItem('orders') || '[]');
-      orders.push({
-        id: newOrderId,
-        date: new Date(),
-        items: orderList,
-        total: totalAmount,
-        mobile: mobile,
-        address: address
-      });
-
-      // Save both order and new ID
+      orders.push(window.currentOrder);
       localStorage.setItem('orders', JSON.stringify(orders));
       localStorage.setItem('lastOrderId', newOrderId.toString());
       
-      // ✉️ Send order details via Netlify Function
-      fetch("/.netlify/functions/send-order", {
-        method: "POST",
-        body: JSON.stringify({
-          mobile,
-          address,
-          orderList,
-          totalAmount,
-          orderId: String(newOrderId).padStart(3, '0')
-        }),
-      });
-
       resetForm();
+    }
+
+    function sendWhatsApp() {
+      if (!window.currentOrder) {
+        alert('No order data found. Please place an order first.');
+        return;
+      }
+      
+      const order = window.currentOrder;
+      
+      // Create WhatsApp message
+      const message = `🛍️ *NEW ORDER #${String(order.id).padStart(3, '0')}*\n\n` +
+                     `📅 Date: ${order.date} ${order.time}\n\n` +
+                     `👤 *Customer Details:*\n` +
+                     `📱 Mobile: ${order.mobile}\n` +
+                     `📍 Address: ${order.address}\n\n` +
+                     `📦 *Items Ordered:*\n${order.items}\n` +
+                     `💰 *Total Amount: ₹${order.total}*\n\n` +
+                     `Please prepare and deliver the order.\n\n` +
+                     `- பூர்ணிமா வர்த்தகர்ஸ் (Poornima Traders)`;
+      
+      // Open WhatsApp with the message
+      const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+      window.open(whatsappUrl, '_blank');
+      
+      // Close modal after sending
+      closeModal();
     }
 
     function closeModal() {
@@ -297,7 +342,6 @@
     }
 
     function resetForm() {
-      // Reset all select elements to 0
       document.querySelectorAll('select').forEach(select => {
         select.value = "0";
       });
@@ -372,12 +416,21 @@
     </div>
   </div>
 
-  <!-- Add this before closing body tag -->
-  <div id="orderModal" class="modal">
+  <!-- Order Modal with WhatsApp Options -->
+  <div id="orderModal" class="modal whatsapp-modal">
     <button class="close-btn" onclick="closeModal()">×</button>
-    <h3>Order Confirmed!</h3>
+    <h3>✅ Order Confirmed!</h3>
     <div id="orderDetails" class="modal-content"></div>
+    <div class="modal-buttons">
+      <button class="whatsapp-btn" onclick="sendWhatsApp()">
+        📱 Send WhatsApp
+      </button>
+      <button class="cancel-btn" onclick="closeModal()">
+        Cancel
+      </button>
+    </div>
   </div>
+
   <a href="orders.html" class="admin-link">View Orders</a>
 </body>
 </html>
