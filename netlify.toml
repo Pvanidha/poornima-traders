@@ -1,9 +1,0 @@
-[build]
-  publish = "."  # or your frontend folder
-
-[functions]
-  directory = "netlify/functions"
-
-[dev]
-  port = 8888
-  functions = "netlify/functions"
