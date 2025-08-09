@@ -2,13 +2,13 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>பூர்ணிமா வர்த்தகர்ஸ் (Poornima Traders) - விலை பட்டியல்</title>
+  <title>Poornima Traders - 9790355960</title>
   <style>
     body {
       font-family: sans-serif;
       margin: 0;
       min-height: 100vh;
-      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       padding: 40px 20px;
     }
 
@@ -17,8 +17,8 @@
       margin: auto;
       background: white;
       padding: 0;
-      border-radius: 10px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+      border-radius: 15px;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.15);
       max-height: 80vh;
       overflow-y: auto;
     }
@@ -26,87 +26,157 @@
     .sticky-header {
       position: sticky;
       top: 0;
-      background: white;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
       z-index: 2;
-      padding: 15px 30px;
+      padding: 20px 30px;
       margin-bottom: 0;
-      border-bottom: 2px solid #eee;
+      border-radius: 15px 15px 0 0;
+      text-align: center;
     }
 
     h2 {
       margin: 0;
       padding: 0;
+      font-size: 24px;
+      font-weight: 600;
     }
 
     table {
       padding: 0 30px;
       width: calc(100% - 60px);
       margin: 0 auto 30px;
+      table-layout: fixed;
+      border-collapse: collapse;
     }
 
     thead {
       position: sticky;
-      top: 65px;
+      top: 85px;
       background: white;
       z-index: 1;
     }
 
     th, td {
-      border: 1px solid #ccc;
-      padding: 8px 10px;
+      border: 1px solid #ddd;
+      padding: 12px 10px;
       text-align: left;
     }
+    
     th {
-      background-color: #f2f2f2;
+      background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
       white-space: nowrap;
+      font-weight: 600;
+      color: #2c3e50;
+      border-bottom: 2px solid #007bff;
     }
+    
+    /* Column width adjustments */
+    th:nth-child(1), td:nth-child(1) { /* S.No */
+      width: 8%;
+      text-align: center;
+    }
+    
+    th:nth-child(2), td:nth-child(2) { /* Products */
+      width: 46%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    
+    th:nth-child(3), td:nth-child(3), /* MRP */
+    th:nth-child(4), td:nth-child(4), /* Price */
+    th:nth-child(5), td:nth-child(5) { /* Quantity */
+      width: 15.33%;
+      text-align: center;
+    }
+    
     select {
-      padding: 6px;
-      width: 60px;
+      padding: 8px;
+      width: 70px;
+      border: 2px solid #ddd;
+      border-radius: 6px;
+      background: white;
+      font-size: 14px;
     }
+
+    select:focus {
+      outline: none;
+      border-color: #007bff;
+      box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+    }
+
+    /* Enhanced product category colors */
     .gingily-oil {
-      background-color: #fff3e6;
+      background: linear-gradient(135deg, #fff8e1 0%, #ffecb3 100%);
+      border-left: 4px solid #ff8f00;
     }
     .groundnut-oil {
-      background-color: #e6ffe6;
+      background: linear-gradient(135deg, #e8f5e8 0%, #c8e6c9 100%);
+      border-left: 4px solid #4caf50;
     }
     .coconut-oil {
-      background-color: #e6f3ff;
+      background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+      border-left: 4px solid #2196f3;
     }
     .deepam-oil {
-      background-color: #ffe6e6;
+      background: linear-gradient(135deg, #fce4ec 0%, #f8bbd9 100%);
+      border-left: 4px solid #e91e63;
     }
-    .mustard-oil {
-      background-color: #fff5e6;
+    .castor-oil {
+      background: linear-gradient(135deg, #fff3e0 0%, #ffcc02 100%);
+      border-left: 4px solid #ff9800;
     }
     .ghee {
-      background-color: #f9f9e6;
+      background: linear-gradient(135deg, #fffde7 0%, #fff9c4 100%);
+      border-left: 4px solid #fbc02d;
+    }
+    .rice {
+      background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%);
+      border-left: 4px solid #9c27b0;
+    }
+    .health-mix {
+      background: linear-gradient(135deg, #fff8e1 0%, #ffcc80 100%);
+      border-left: 4px solid #ff7043;
+    }
+    .dal {
+      background: linear-gradient(135deg, #f1f8e9 0%, #dcedc8 100%);
+      border-left: 4px solid #689f38;
     }
     .tamarind {
-      background-color: #ffe6ff;
+      background: linear-gradient(135deg, #fce4ec 0%, #f48fb1 100%);
+      border-left: 4px solid #ad1457;
     }
     .appalam {
-      background-color: #e6fff2;
+      background: linear-gradient(135deg, #e0f2f1 0%, #b2dfdb 100%);
+      border-left: 4px solid #00695c;
     }
     .sugar {
-      background-color: #f2e6ff;
+      background: linear-gradient(135deg, #f3e5f5 0%, #ce93d8 100%);
+      border-left: 4px solid #7b1fa2;
     }
     .tea {
-      background-color: #ffe6f2;
+      background: linear-gradient(135deg, #efebe9 0%, #d7ccc8 100%);
+      border-left: 4px solid #5d4037;
     }
+
     .order-btn {
       display: block;
       margin: 20px auto;
-      padding: 12px 24px;
-      background-color: #4CAF50;
+      padding: 15px 30px;
+      background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
       color: white;
       border: none;
-      border-radius: 4px;
-      font-size: 16px;
+      border-radius: 8px;
+      font-size: 18px;
+      font-weight: 600;
       cursor: pointer;
+      box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+      transition: all 0.3s ease;
     }
     .order-btn:hover {
-      background-color: #45a049;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
     }
     .order-options {
       display: flex;
@@ -115,31 +185,36 @@
       margin: 20px;
     }
     .whatsapp-btn {
-      background-color: #25d366;
+      background: linear-gradient(135deg, #25d366 0%, #128C7E 100%);
       color: white;
       border: none;
-      border-radius: 4px;
+      border-radius: 8px;
       padding: 12px 24px;
       font-size: 16px;
       cursor: pointer;
       display: flex;
       align-items: center;
       gap: 8px;
+      box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+      transition: all 0.3s ease;
     }
     .whatsapp-btn:hover {
-      background-color: #128C7E;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
     }
     .cancel-btn {
-      background-color: #6c757d;
+      background: linear-gradient(135deg, #6c757d 0%, #5a6268 100%);
       color: white;
       border: none;
-      border-radius: 4px;
+      border-radius: 8px;
       padding: 12px 24px;
       font-size: 16px;
       cursor: pointer;
+      transition: all 0.3s ease;
     }
     .cancel-btn:hover {
-      background-color: #5a6268;
+      transform: translateY(-2px);
+      background: linear-gradient(135deg, #5a6268 0%, #495057 100%);
     }
     .modal {
       display: none;
@@ -148,36 +223,48 @@
       left: 50%;
       transform: translate(-50%, -50%);
       background: white;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.2);
-      max-width: 400px;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+      max-width: 450px;
       width: 90%;
       z-index: 1000;
     }
     .modal-content {
       white-space: pre-line;
       margin: 15px 0;
+      font-family: monospace;
+      background: #f8f9fa;
+      padding: 15px;
+      border-radius: 8px;
+      border-left: 4px solid #007bff;
     }
     .close-btn {
       float: right;
       cursor: pointer;
-      padding: 5px 10px;
-      background: #f44336;
+      padding: 8px 12px;
+      background: linear-gradient(135deg, #f44336 0%, #d32f2f 100%);
       color: white;
       border: none;
-      border-radius: 4px;
+      border-radius: 6px;
+      font-weight: bold;
     }
     .admin-link {
       position: fixed;
       bottom: 20px;
       right: 20px;
-      padding: 10px;
-      background: #2c3e50;
+      padding: 12px 18px;
+      background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
       color: white;
       text-decoration: none;
-      border-radius: 4px;
+      border-radius: 8px;
       font-size: 14px;
+      box-shadow: 0 4px 15px rgba(44, 62, 80, 0.3);
+      transition: all 0.3s ease;
+    }
+    .admin-link:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(44, 62, 80, 0.4);
     }
     .customer-info {
       padding: 0 30px;
@@ -186,28 +273,47 @@
     
     .customer-info input {
       width: 100%;
-      padding: 8px;
+      padding: 12px;
       margin: 8px 0;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      font-size: 14px;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      font-size: 16px;
+      transition: border-color 0.3s ease;
+    }
+
+    .customer-info input:focus {
+      outline: none;
+      border-color: #007bff;
+      box-shadow: 0 0 8px rgba(0, 123, 255, 0.2);
     }
     
     .customer-info label {
-      font-weight: bold;
-      color: #333;
+      font-weight: 600;
+      color: #2c3e50;
+      display: block;
+      margin-top: 15px;
     }
 
     .modal-buttons {
       display: flex;
       gap: 10px;
-      margin-top: 15px;
+      margin-top: 20px;
       justify-content: center;
     }
 
     .whatsapp-modal {
-      background: #f0f8f0;
-      border-left: 4px solid #25d366;
+      background: linear-gradient(135deg, #f0f8f0 0%, #e8f5e8 100%);
+      border: 2px solid #25d366;
+    }
+
+    /* Hover effects for product rows */
+    tbody tr {
+      transition: all 0.2s ease;
+    }
+
+    tbody tr:hover {
+      transform: scale(1.01);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
   </style>
   <script>
@@ -223,7 +329,7 @@
         defaultOption.text = "0";
         select.appendChild(defaultOption);
         
-        for(let i = 1; i <= 50; i++) {
+        for(let i = 1; i <= 5; i++) {
           const option = document.createElement('option');
           option.value = i;
           option.text = i;
@@ -253,8 +359,12 @@
       let hasItems = false;
       let totalAmount = 0;
 
-      const lastOrderId = parseInt(localStorage.getItem('lastOrderId') || '0');
-      const newOrderId = lastOrderId + 1;
+      // Use in-memory storage instead of localStorage
+      if (!window.orderStorage) {
+        window.orderStorage = { lastOrderId: 0, orders: [] };
+      }
+
+      const newOrderId = window.orderStorage.lastOrderId + 1;
 
       table.querySelectorAll('tr').forEach((row, index) => {
         if (index === 0) return; // Skip header row
@@ -301,11 +411,9 @@
 
       document.getElementById('orderModal').style.display = 'block';
       
-      // Save order
-      const orders = JSON.parse(localStorage.getItem('orders') || '[]');
-      orders.push(window.currentOrder);
-      localStorage.setItem('orders', JSON.stringify(orders));
-      localStorage.setItem('lastOrderId', newOrderId.toString());
+      // Save order in memory
+      window.orderStorage.orders.push(window.currentOrder);
+      window.orderStorage.lastOrderId = newOrderId;
       
       resetForm();
     }
@@ -325,9 +433,7 @@
                      `📱 Mobile: ${order.mobile}\n` +
                      `📍 Address: ${order.address}\n\n` +
                      `📦 *Items Ordered:*\n${order.items}\n` +
-                     `💰 *Total Amount: ₹${order.total}*\n\n` +
-                     `Please prepare and deliver the order.\n\n` +
-                     `- பூர்ணிமா வர்த்தகர்ஸ் (Poornima Traders)`;
+                     `💰 *Total Amount: ₹${order.total}*\n\n`;
       
       // Open WhatsApp with the message
       const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
@@ -351,68 +457,107 @@
 <body>
   <div class="container">
     <div class="sticky-header">
-      <h2>பூர்ணிமா வர்த்தகர்ஸ் (Poornima Traders) – விலை பட்டியல் (Price List)</h2>
+      <h2>🏪 Poornima Traders – 9790355960 📞</h2>
     </div>
     <table>
       <thead>
         <tr>
           <th>S.No</th>
-          <th>பொருட்கள் (Product)</th>
+          <th>Products</th>
           <th>MRP (₹)</th>
-          <th>விலை (Price) (₹)</th>
-          <th>எண்ணிக்கை (Quantity)</th>
+          <th>Price (₹)</th>
+          <th>Quantity</th>
         </tr>
       </thead>
       <tbody>
-        <tr class="gingily-oil"><td>1</td><td>நல்லெண்ணெய் (Gingily Oil) – 5 Lt Cane</td><td>2000</td><td>1450</td><td><select></select></td></tr>
-        <tr class="gingily-oil"><td>2</td><td>நல்லெண்ணெய் (Gingily Oil) – 1 Lt Cane</td><td>420</td><td>300</td><td><select></select></td></tr>
+        <!-- Gingily Oil Section -->
+        <tr class="gingily-oil"><td>1</td><td>நல்லெண்ணெய் (Gingily Oil) – 5 Lt Cane</td><td>2000</td><td>1500</td><td><select></select></td></tr>
+        <tr class="gingily-oil"><td>2</td><td>நல்லெண்ணெய் (Gingily Oil) – 1 Lt Cane</td><td>420</td><td>320</td><td><select></select></td></tr>
         <tr class="gingily-oil"><td>3</td><td>நல்லெண்ணெய் (Gingily Oil) – 1/2 Lt Cane</td><td>220</td><td>160</td><td><select></select></td></tr>
         <tr class="gingily-oil"><td>4</td><td>நல்லெண்ணெய் (Gingily Oil) – 200 ML Pet</td><td>90</td><td>70</td><td><select></select></td></tr>
 
+        <!-- Groundnut Oil Section -->
         <tr class="groundnut-oil"><td>5</td><td>கடலை எண்ணெய் (Groundnut Oil) – 5 Lt Cane</td><td>1500</td><td>1100</td><td><select></select></td></tr>
-        <tr class="groundnut-oil"><td>6</td><td>கடலை எண்ணெய் (Groundnut Oil) – 1 Lt Cane</td><td>320</td><td>210</td><td><select></select></td></tr>
-        <tr class="groundnut-oil"><td>7</td><td>கடலை எண்ணெய் (Groundnut Oil) – 1/2 Lt Cane</td><td>160</td><td>110</td><td><select></select></td></tr>
+        <tr class="groundnut-oil"><td>6</td><td>கடலை எண்ணெய் (Groundnut Oil) – 1 Lt Cane</td><td>320</td><td>220</td><td><select></select></td></tr>
+        <tr class="groundnut-oil"><td>7</td><td>கடலை எண்ணெய் (Groundnut Oil) – 1/2 Lt Cane</td><td>160</td><td>120</td><td><select></select></td></tr>
 
-        <tr class="coconut-oil"><td>8</td><td>தேங்காய் எண்ணெய் (Coconut Oil) – 1 Lt Cane</td><td>450</td><td>350</td><td><select></select></td></tr>
-        <tr class="coconut-oil"><td>9</td><td>தேங்காய் எண்ணெய் (Coconut Oil) – 1/2 Lt Cane</td><td>250</td><td>180</td><td><select></select></td></tr>
-        <tr class="coconut-oil"><td>10</td><td>தேங்காய் எண்ணெய் (Coconut Oil) – 200 ML Pet</td><td>90</td><td>70</td><td><select></select></td></tr>
+        <!-- Coconut Oil Section -->
+        <tr class="coconut-oil"><td>8</td><td>தேங்காய் எண்ணெய் (Coconut Oil) – 1 Lt Cane</td><td>600</td><td>520</td><td><select></select></td></tr>
+        <tr class="coconut-oil"><td>9</td><td>தேங்காய் எண்ணெய் (Coconut Oil) – 1/2 Lt Cane</td><td>300</td><td>270</td><td><select></select></td></tr>
+        <tr class="coconut-oil"><td>10</td><td>தேங்காய் எண்ணெய் (Coconut Oil) – 200 ML Pet</td><td>150</td><td>120</td><td><select></select></td></tr>
 
-        <tr class="deepam-oil"><td>11</td><td>தீபம் எண்ணெய் (Deepam Oil) – 1 Lt Cane</td><td>250</td><td>180</td><td><select></select></td></tr>
+        <!-- Deepam Oil Section -->
+        <tr class="deepam-oil"><td>11</td><td>தீபம் எண்ணெய் (Deepam Oil) – 1 Lt Cane</td><td>300</td><td>210</td><td><select></select></td></tr>
         <tr class="deepam-oil"><td>12</td><td>தீபம் எண்ணெய் (Deepam Oil) – 1/2 Lt Cane</td><td>150</td><td>120</td><td><select></select></td></tr>
 
-        <tr class="mustard-oil"><td>13</td><td>கடுகு எண்ணெய் (Mustard Oil) – 200 ML Pet</td><td>80</td><td>60</td><td><select></select></td></tr>
+        <!-- Castor Oil Section -->
+        <tr class="castor-oil"><td>13</td><td>அமணக்கு எண்ணெய் (Castor Oil) – 200 ML Pet</td><td>80</td><td>60</td><td><select></select></td></tr>
 
+        <!-- Ghee Section -->
         <tr class="ghee"><td>14</td><td>பசு நெய் (Cow Ghee) – 1 KG</td><td>650</td><td>550</td><td><select></select></td></tr>
         <tr class="ghee"><td>15</td><td>பசு நெய் (Cow Ghee) – 1/2 KG</td><td>350</td><td>300</td><td><select></select></td></tr>
         <tr class="ghee"><td>16</td><td>பசு நெய் (Cow Ghee) – 250 Gram</td><td>180</td><td>160</td><td><select></select></td></tr>
 
-        <tr class="tamarind"><td>17</td><td>புளி (Tamarind) – 1 KG</td><td>240</td><td>160</td><td><select></select></td></tr>
-        <tr class="tamarind"><td>18</td><td>புளி (Tamarind) – 1/2 KG</td><td>140</td><td>90</td><td><select></select></td></tr>
-        <tr class="tamarind"><td>19</td><td>புளி (Tamarind) – 250 Gram</td><td>80</td><td>40</td><td><select></select></td></tr>
+        <!-- Rice Section -->
+        <tr class="rice"><td>17</td><td>புளுங்கல் அரிசி (Boiled Rice) – 5kg</td><td>380</td><td>350</td><td><select></select></td></tr>
+        <tr class="rice"><td>18</td><td>புளுங்கல் அரிசி (Boiled Rice) – 10kg</td><td>760</td><td>700</td><td><select></select></td></tr>
+        <tr class="rice"><td>19</td><td>புளுங்கல் அரிசி (Boiled Rice) – 26kg</td><td>2000</td><td>1820</td><td><select></select></td></tr>
 
-        <tr class="appalam"><td>20</td><td>அப்பளம் (Appalam) – 1 KG</td><td>450</td><td>180</td><td><select></select></td></tr>
-        <tr class="appalam"><td>21</td><td>அப்பளம் (Appalam) – 1/2 KG</td><td>250</td><td>90</td><td><select></select></td></tr>
-        <tr class="appalam"><td>22</td><td>அப்பளம் (Appalam) – 100 Gram</td><td>45</td><td>18</td><td><select></select></td></tr>
+        <tr class="rice"><td>20</td><td>பச்சரிசி (Raw Rice) – 5kg</td><td>380</td><td>350</td><td><select></select></td></tr>
+        <tr class="rice"><td>21</td><td>பச்சரிசி (Raw Rice) – 10kg</td><td>760</td><td>700</td><td><select></select></td></tr>
+        <tr class="rice"><td>22</td><td>பச்சரிசி (Raw Rice) – 26kg</td><td>2000</td><td>1820</td><td><select></select></td></tr>
 
-        <tr class="sugar"><td>23</td><td>நாட்டு சர்க்கரை (Country Sugar) – 1 KG</td><td>120</td><td>75</td><td><select></select></td></tr>
-        <tr class="sugar"><td>24</td><td>நாட்டு சர்க்கரை (Country Sugar) – 1/2 KG</td><td>60</td><td>38</td><td><select></select></td></tr>
+        <tr class="rice"><td>23</td><td>இட்லி அரிசி (Idly Rice) – 5kg</td><td>250</td><td>210</td><td><select></select></td></tr>
+        <tr class="rice"><td>24</td><td>இட்லி அரிசி (Idly Rice) – 10kg</td><td>500</td><td>420</td><td><select></select></td></tr>
 
-        <tr class="tea"><td>25</td><td>வால்பாறை தேயிலை தூள் (Valparai Tea Powder) – 1/2 KG</td><td>195</td><td>170</td><td><select></select></td></tr>
-        <tr class="tea"><td>26</td><td>வால்பாறை தேயிலை தூள் (Valparai Tea Powder) – 100 Gram</td><td>90</td><td>40</td><td><select></select></td></tr>
+        <!-- Health Mix Section -->
+        <tr class="health-mix"><td>25</td><td>சத்து மாவு (Health Mix Powder) – 1/4kg</td><td>180</td><td>150</td><td><select></select></td></tr>
+        <tr class="health-mix"><td>26</td><td>சத்து மாவு (Health Mix Powder) – 1/2kg</td><td>350</td><td>280</td><td><select></select></td></tr>
+
+        <!-- Dal Section -->
+        <tr class="dal"><td>27</td><td>உளுந்து (Urad Dal) – 1kg</td><td>150</td><td>130</td><td><select></select></td></tr>
+        <tr class="dal"><td>28</td><td>உளுந்து (Urad Dal) – 1/2kg</td><td>90</td><td>70</td><td><select></select></td></tr>
+        
+        <tr class="dal"><td>29</td><td>துவரம் பருப்பு (Toor Dal) – 1kg</td><td>150</td><td>130</td><td><select></select></td></tr>
+        <tr class="dal"><td>30</td><td>துவரம் பருப்பு (Toor Dal) – 1/2kg</td><td>90</td><td>70</td><td><select></select></td></tr>
+
+        <tr class="dal"><td>31</td><td>பாசி பருப்பு (Moong Dal) – 1kg</td><td>150</td><td>130</td><td><select></select></td></tr>
+        <tr class="dal"><td>32</td><td>பாசி பருப்பு (Moong Dal) – 1/2kg</td><td>90</td><td>70</td><td><select></select></td></tr>
+
+        <tr class="dal"><td>33</td><td>கடலை பருப்பு (Chana Dal) – 1kg</td><td>120</td><td>100</td><td><select></select></td></tr>
+        <tr class="dal"><td>34</td><td>கடலை பருப்பு (Chana Dal) – 1/2kg</td><td>60</td><td>50</td><td><select></select></td></tr>
+
+        <!-- Tamarind Section -->
+        <tr class="tamarind"><td>35</td><td>புளி (Tamarind) – 1 KG</td><td>240</td><td>160</td><td><select></select></td></tr>
+        <tr class="tamarind"><td>36</td><td>புளி (Tamarind) – 1/2 KG</td><td>140</td><td>90</td><td><select></select></td></tr>
+        <tr class="tamarind"><td>37</td><td>புளி (Tamarind) – 250 Gram</td><td>80</td><td>50</td><td><select></select></td></tr>
+
+        <!-- Appalam Section -->
+        <tr class="appalam"><td>38</td><td>அப்பளம் (Appalam) – 1 KG</td><td>450</td><td>200</td><td><select></select></td></tr>
+        <tr class="appalam"><td>39</td><td>அப்பளம் (Appalam) – 1/2 KG</td><td>250</td><td>120</td><td><select></select></td></tr>
+        <tr class="appalam"><td>40</td><td>அப்பளம் (Appalam) – 100 Gram</td><td>35</td><td>25</td><td><select></select></td></tr>
+
+        <!-- Sugar Section -->
+        <tr class="sugar"><td>41</td><td>நாட்டு சர்க்கரை (Country Sugar) – 1 KG</td><td>130</td><td>100</td><td><select></select></td></tr>
+        <tr class="sugar"><td>42</td><td>நாட்டு சர்க்கரை (Country Sugar) – 1/2 KG</td><td>80</td><td>50</td><td><select></select></td></tr>
+
+        <!-- Tea Section -->
+        <tr class="tea"><td>43</td><td>வால்பாறை தேயிலை தூள் (Valparai Tea Powder) – 1/2 KG</td><td>195</td><td>170</td><td><select></select></td></tr>
+        <tr class="tea"><td>44</td><td>வால்பாறை தேயிலை தூள் (Valparai Tea Powder) – 100 Gram</td><td>90</td><td>40</td><td><select></select></td></tr>
       </tbody>
     </table>
     <div class="customer-info">
       <div>
-          <label for="customerMobile">Mobile Number *</label>
+          <label for="customerMobile">📱 Mobile Number *</label>
           <input type="tel" id="customerMobile" maxlength="10" pattern="[0-9]{10}" required placeholder="Enter 10-digit mobile number">
       </div>
       <div>
-          <label for="customerAddress">Delivery Address *</label>
+          <label for="customerAddress">📍 Delivery Address *</label>
           <input type="text" id="customerAddress" required placeholder="Enter delivery address">
       </div>
     </div>
     <div class="order-options">
-      <button class="order-btn" onclick="placeOrder()">Place Order</button>
+      <button class="order-btn" onclick="placeOrder()">🛒 Place Order</button>
     </div>
   </div>
 
@@ -431,6 +576,6 @@
     </div>
   </div>
 
-  <a href="orders.html" class="admin-link">View Orders</a>
+  <a href="orders.html" class="admin-link">📋 View Orders</a>
 </body>
 </html>
