@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Poornima Traders - 9790355960</title>
+  <title>Poornima Traders</title>
   <style>
     body {
       font-family: sans-serif;
@@ -71,29 +71,29 @@
       border-bottom: 2px solid #007bff;
     }
     
-    /* Column width adjustments */
+    /* Column width adjustments - redistributed after removing image column */
     th:nth-child(1), td:nth-child(1) { /* S.No */
-      width: 8%;
+      width: 10%;
       text-align: center;
     }
     
     th:nth-child(2), td:nth-child(2) { /* Products */
-      width: 46%;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      width: 50%;
     }
     
-    th:nth-child(3), td:nth-child(3), /* MRP */
-    th:nth-child(4), td:nth-child(4), /* Price */
-    th:nth-child(5), td:nth-child(5) { /* Quantity */
-      width: 15.33%;
+    th:nth-child(3), td:nth-child(3) { /* Quantity dropdown */
+      width: 20%;
+      text-align: center;
+    }
+    
+    th:nth-child(4), td:nth-child(4) { /* No of items */
+      width: 20%;
       text-align: center;
     }
     
     select {
       padding: 8px;
-      width: 70px;
+      width: 120px;
       border: 2px solid #ddd;
       border-radius: 6px;
       background: white;
@@ -106,58 +106,30 @@
       box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
     }
 
-    /* Enhanced product category colors */
-    .gingily-oil {
+    .quantity-select {
+      width: 70px;
+    }
+
+    /* Enhanced product category colors - 5 contrasting colors with recursion */
+    .color-1 {
       background: linear-gradient(135deg, #fff8e1 0%, #ffecb3 100%);
       border-left: 4px solid #ff8f00;
     }
-    .groundnut-oil {
+    .color-2 {
       background: linear-gradient(135deg, #e8f5e8 0%, #c8e6c9 100%);
       border-left: 4px solid #4caf50;
     }
-    .coconut-oil {
+    .color-3 {
       background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
       border-left: 4px solid #2196f3;
     }
-    .deepam-oil {
+    .color-4 {
       background: linear-gradient(135deg, #fce4ec 0%, #f8bbd9 100%);
       border-left: 4px solid #e91e63;
     }
-    .castor-oil {
-      background: linear-gradient(135deg, #fff3e0 0%, #ffcc02 100%);
-      border-left: 4px solid #ff9800;
-    }
-    .ghee {
-      background: linear-gradient(135deg, #fffde7 0%, #fff9c4 100%);
-      border-left: 4px solid #fbc02d;
-    }
-    .rice {
+    .color-5 {
       background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%);
       border-left: 4px solid #9c27b0;
-    }
-    .health-mix {
-      background: linear-gradient(135deg, #fff8e1 0%, #ffcc80 100%);
-      border-left: 4px solid #ff7043;
-    }
-    .dal {
-      background: linear-gradient(135deg, #f1f8e9 0%, #dcedc8 100%);
-      border-left: 4px solid #689f38;
-    }
-    .tamarind {
-      background: linear-gradient(135deg, #fce4ec 0%, #f48fb1 100%);
-      border-left: 4px solid #ad1457;
-    }
-    .appalam {
-      background: linear-gradient(135deg, #e0f2f1 0%, #b2dfdb 100%);
-      border-left: 4px solid #00695c;
-    }
-    .sugar {
-      background: linear-gradient(135deg, #f3e5f5 0%, #ce93d8 100%);
-      border-left: 4px solid #7b1fa2;
-    }
-    .tea {
-      background: linear-gradient(135deg, #efebe9 0%, #d7ccc8 100%);
-      border-left: 4px solid #5d4037;
     }
 
     .order-btn {
@@ -320,10 +292,190 @@
     // Fixed WhatsApp number for all messages
     const WHATSAPP_NUMBER = "919790355960";
 
+    // Product data with different quantity options and prices
+    const productData = {
+      1: {
+        name: "மஞ்சள் தூள் (Manjal Thool)",
+        options: [
+          { size: "50g", price: 40 }
+        ]
+      },
+      2: {
+        name: "நல்லெண்ணெய் (Gingily Oil)",
+        options: [
+          { size: "5 Lt Cane", price: 1500 },
+          { size: "1 Lt Cane", price: 320 },
+          { size: "1/2 Lt Cane", price: 160 },
+          { size: "200 ML Pet", price: 70 }
+        ]
+      },
+      3: {
+        name: "கடலை எண்ணெய் (Groundnut Oil)",
+        options: [
+          { size: "5 Lt Cane", price: 1100 },
+          { size: "1 Lt Cane", price: 220 },
+          { size: "1/2 Lt Cane", price: 120 }
+        ]
+      },
+      4: {
+        name: "தேங்காய் எண்ணெய் (Coconut Oil)",
+        options: [
+          { size: "1 Lt Cane", price: 520 },
+          { size: "1/2 Lt Cane", price: 270 },
+          { size: "200 ML Pet", price: 120 }
+        ]
+      },
+      5: {
+        name: "தீபம் எண்ணெய் (Deepam Oil)",
+        options: [
+          { size: "1 Lt Cane", price: 210 },
+          { size: "1/2 Lt Cane", price: 120 }
+        ]
+      },
+      6: {
+        name: "சூரியகாந்தி எண்ணெய் (Sunflower Oil)",
+        options: [
+          { size: "1 Lt", price: 150 }
+        ]
+      },
+      7: {
+        name: "அமணக்கு எண்ணெய் (Castor Oil)",
+        options: [
+          { size: "200 ML Pet", price: 60 }
+        ]
+      },
+      8: {
+        name: "பசு நெய் (Cow Ghee)",
+        options: [
+          { size: "1 KG", price: 550 },
+          { size: "1/2 KG", price: 300 },
+          { size: "250 Gram", price: 160 }
+        ]
+      },
+      9: {
+        name: "புழுங்கல் அரிசி (Boiled Rice)",
+        options: [
+          { size: "5kg", price: 350 },
+          { size: "10kg", price: 700 },
+          { size: "26kg", price: 1820 }
+        ]
+      },
+      10: {
+        name: "பச்சரிசி (Raw Rice)",
+        options: [
+          { size: "5kg", price: 350 },
+          { size: "10kg", price: 700 },
+          { size: "26kg", price: 1820 }
+        ]
+      },
+      11: {
+        name: "இட்லி அரிசி (Idly Rice)",
+        options: [
+          { size: "5kg", price: 210 },
+          { size: "10kg", price: 420 }
+        ]
+      },
+      12: {
+        name: "சீரகசம்பா (Seeraga Samba)",
+        options: [
+          { size: "1kg", price: 160 }
+        ]
+      },
+      13: {
+        name: "சத்து மாவு (Health Mix Powder)",
+        options: [
+          { size: "1/4kg", price: 150 },
+          { size: "1/2kg", price: 280 }
+        ]
+      },
+      14: {
+        name: "உளுந்து (Urad Dal)",
+        options: [
+          { size: "1kg", price: 130 },
+          { size: "1/2kg", price: 70 }
+        ]
+      },
+      15: {
+        name: "துவரம் பருப்பு (Toor Dal)",
+        options: [
+          { size: "1kg", price: 130 },
+          { size: "1/2kg", price: 70 }
+        ]
+      },
+      16: {
+        name: "பாசி பருப்பு (Moong Dal)",
+        options: [
+          { size: "1kg", price: 130 },
+          { size: "1/2kg", price: 70 }
+        ]
+      },
+      17: {
+        name: "கடலை பருப்பு (Chana Dal)",
+        options: [
+          { size: "1kg", price: 100 },
+          { size: "1/2kg", price: 50 }
+        ]
+      },
+      18: {
+        name: "புளி (Tamarind)",
+        options: [
+          { size: "1 KG", price: 160 },
+          { size: "1/2 KG", price: 90 },
+          { size: "250 Gram", price: 50 }
+        ]
+      },
+      19: {
+        name: "அப்பளம் (Appalam)",
+        options: [
+          { size: "1 KG", price: 200 },
+          { size: "1/2 KG", price: 120 },
+          { size: "100 Gram", price: 25 }
+        ]
+      },
+      20: {
+        name: "நாட்டு சர்க்கரை (Country Sugar)",
+        options: [
+          { size: "1 KG", price: 100 },
+          { size: "1/2 KG", price: 50 }
+        ]
+      },
+      21: {
+        name: "வால்பாறை தேயிலை தூள் (Valparai Tea Powder)",
+        options: [
+          { size: "1/2 KG", price: 170 },
+          { size: "100 Gram", price: 40 }
+        ]
+      }
+    };
+
+    // Function to get color class based on index (recursive pattern)
+    function getColorClass(index) {
+      return `color-${((index - 1) % 5) + 1}`;
+    }
+
     window.onload = function() {
-      // Populate select options
-      const selects = document.querySelectorAll('select');
-      selects.forEach(select => {
+      // Populate quantity select options for quantity dropdowns
+      const quantitySelects = document.querySelectorAll('select.quantity-select');
+      quantitySelects.forEach(select => {
+        const defaultOption = document.createElement('option');
+        defaultOption.value = "";
+        defaultOption.text = "Select";
+        select.appendChild(defaultOption);
+        
+        const productId = select.getAttribute('data-product-id');
+        if (productData[productId]) {
+          productData[productId].options.forEach((option, index) => {
+            const optionElement = document.createElement('option');
+            optionElement.value = index;
+            optionElement.text = `${option.size} - ₹${option.price}`;
+            select.appendChild(optionElement);
+          });
+        }
+      });
+
+      // Populate number of items select options
+      const itemSelects = document.querySelectorAll('select.items-select');
+      itemSelects.forEach(select => {
         const defaultOption = document.createElement('option');
         defaultOption.value = "0";
         defaultOption.text = "0";
@@ -340,16 +492,10 @@
 
     function placeOrder() {
       // Get customer details
-      const mobile = document.getElementById('customerMobile').value;
       const address = document.getElementById('customerAddress').value;
 
-      if (!mobile || !address) {
-        alert('Please enter mobile number and delivery address');
-        return;
-      }
-
-      if (mobile.length !== 10 || !/^\d+$/.test(mobile)) {
-        alert('Please enter a valid 10-digit mobile number');
+      if (!address) {
+        alert('Please enter delivery address');
         return;
       }
 
@@ -369,16 +515,24 @@
       table.querySelectorAll('tr').forEach((row, index) => {
         if (index === 0) return; // Skip header row
         
-        const select = row.querySelector('select');
-        if (select) {
-          const quantity = select.value;
-          if (quantity && quantity !== "0" && parseInt(quantity) > 0) {
+        const quantitySelect = row.querySelector('select.quantity-select');
+        const itemsSelect = row.querySelector('select.items-select');
+        
+        if (quantitySelect && itemsSelect) {
+          const quantityValue = quantitySelect.value;
+          const itemsValue = itemsSelect.value;
+          
+          if (quantityValue !== "" && itemsValue && itemsValue !== "0" && parseInt(itemsValue) > 0) {
             hasItems = true;
-            const product = row.querySelectorAll('td')[1].textContent;
-            const price = parseInt(row.querySelectorAll('td')[3].textContent);
-            const itemTotal = price * parseInt(quantity);
+            const productId = quantitySelect.getAttribute('data-product-id');
+            const productInfo = productData[productId];
+            const selectedOption = productInfo.options[parseInt(quantityValue)];
+            
+            const productName = `${productInfo.name} - ${selectedOption.size}`;
+            const price = selectedOption.price;
+            const itemTotal = price * parseInt(itemsValue);
             totalAmount += itemTotal;
-            orderList += `${quantity} × ${product} - ₹${itemTotal}\n`;
+            orderList += `${itemsValue} × ${productName} - ₹${itemTotal}\n`;
           }
         }
       });
@@ -391,7 +545,6 @@
       // Store current order details globally for WhatsApp
       window.currentOrder = {
         id: newOrderId,
-        mobile: mobile,
         address: address,
         items: orderList,
         total: totalAmount,
@@ -402,10 +555,9 @@
       // Show order confirmation modal
       const orderDetails = document.getElementById('orderDetails');
       orderDetails.textContent = 
-        `🛍️ Order #${String(newOrderId).padStart(3, '0')}\n` +
+        `🛒 Order #${String(newOrderId).padStart(3, '0')}\n` +
         `📅 ${window.currentOrder.date} ${window.currentOrder.time}\n\n` +
-        `👤 Customer: ${mobile}\n` +
-        `📍 Address: ${address}\n\n` +
+        `🏠 Address: ${address}\n\n` +
         `📦 Items:\n${orderList}\n` +
         `💰 Total: ₹${totalAmount}`;
 
@@ -427,11 +579,9 @@
       const order = window.currentOrder;
       
       // Create WhatsApp message
-      const message = `🛍️ *NEW ORDER #${String(order.id).padStart(3, '0')}*\n\n` +
+      const message = `🛒 *NEW ORDER #${String(order.id).padStart(3, '0')}*\n\n` +
                      `📅 Date: ${order.date} ${order.time}\n\n` +
-                     `👤 *Customer Details:*\n` +
-                     `📱 Mobile: ${order.mobile}\n` +
-                     `📍 Address: ${order.address}\n\n` +
+                     `🏠 *Delivery Address:*\n${order.address}\n\n` +
                      `📦 *Items Ordered:*\n${order.items}\n` +
                      `💰 *Total Amount: ₹${order.total}*\n\n`;
       
@@ -449,7 +599,11 @@
 
     function resetForm() {
       document.querySelectorAll('select').forEach(select => {
-        select.value = "0";
+        if (select.classList.contains('quantity-select')) {
+          select.value = "";
+        } else {
+          select.value = "0";
+        }
       });
     }
   </script>
@@ -457,102 +611,169 @@
 <body>
   <div class="container">
     <div class="sticky-header">
-      <h2>🏪 Poornima Traders – 9790355960 📞</h2>
+      <h2>🏪 Poornima Traders 📞</h2>
     </div>
     <table>
       <thead>
         <tr>
           <th>S.No</th>
           <th>Products</th>
-          <th>MRP (₹)</th>
-          <th>Price (₹)</th>
           <th>Quantity</th>
+          <th>No of Items</th>
         </tr>
       </thead>
       <tbody>
-        <!-- Gingily Oil Section -->
-        <tr class="gingily-oil"><td>1</td><td>நல்லெண்ணெய் (Gingily Oil) – 5 Lt Cane</td><td>2000</td><td>1500</td><td><select></select></td></tr>
-        <tr class="gingily-oil"><td>2</td><td>நல்லெண்ணெய் (Gingily Oil) – 1 Lt Cane</td><td>420</td><td>320</td><td><select></select></td></tr>
-        <tr class="gingily-oil"><td>3</td><td>நல்லெண்ணெய் (Gingily Oil) – 1/2 Lt Cane</td><td>220</td><td>160</td><td><select></select></td></tr>
-        <tr class="gingily-oil"><td>4</td><td>நல்லெண்ணெய் (Gingily Oil) – 200 ML Pet</td><td>90</td><td>70</td><td><select></select></td></tr>
+        <tr class="color-1">
+          <td>1</td>
+          <td>மஞ்சள் தூள் (Manjal Thool)</td>
+          <td><select class="quantity-select" data-product-id="1"></select></td>
+          <td><select class="items-select"></select></td>
+        </tr>
 
-        <!-- Groundnut Oil Section -->
-        <tr class="groundnut-oil"><td>5</td><td>கடலை எண்ணெய் (Groundnut Oil) – 5 Lt Cane</td><td>1500</td><td>1100</td><td><select></select></td></tr>
-        <tr class="groundnut-oil"><td>6</td><td>கடலை எண்ணெய் (Groundnut Oil) – 1 Lt Cane</td><td>320</td><td>220</td><td><select></select></td></tr>
-        <tr class="groundnut-oil"><td>7</td><td>கடலை எண்ணெய் (Groundnut Oil) – 1/2 Lt Cane</td><td>160</td><td>120</td><td><select></select></td></tr>
+        <tr class="color-2">
+          <td>2</td>
+          <td>நல்லெண்ணெய் (Gingily Oil)</td>
+          <td><select class="quantity-select" data-product-id="2"></select></td>
+          <td><select class="items-select"></select></td>
+        </tr>
 
-        <!-- Coconut Oil Section -->
-        <tr class="coconut-oil"><td>8</td><td>தேங்காய் எண்ணெய் (Coconut Oil) – 1 Lt Cane</td><td>600</td><td>520</td><td><select></select></td></tr>
-        <tr class="coconut-oil"><td>9</td><td>தேங்காய் எண்ணெய் (Coconut Oil) – 1/2 Lt Cane</td><td>300</td><td>270</td><td><select></select></td></tr>
-        <tr class="coconut-oil"><td>10</td><td>தேங்காய் எண்ணெய் (Coconut Oil) – 200 ML Pet</td><td>150</td><td>120</td><td><select></select></td></tr>
+        <tr class="color-3">
+          <td>3</td>
+          <td>கடலை எண்ணெய் (Groundnut Oil)</td>
+          <td><select class="quantity-select" data-product-id="3"></select></td>
+          <td><select class="items-select"></select></td>
+        </tr>
 
-        <!-- Deepam Oil Section -->
-        <tr class="deepam-oil"><td>11</td><td>தீபம் எண்ணெய் (Deepam Oil) – 1 Lt Cane</td><td>300</td><td>210</td><td><select></select></td></tr>
-        <tr class="deepam-oil"><td>12</td><td>தீபம் எண்ணெய் (Deepam Oil) – 1/2 Lt Cane</td><td>150</td><td>120</td><td><select></select></td></tr>
+        <tr class="color-4">
+          <td>4</td>
+          <td>தேங்காய் எண்ணெய் (Coconut Oil)</td>
+          <td><select class="quantity-select" data-product-id="4"></select></td>
+          <td><select class="items-select"></select></td>
+        </tr>
 
-        <!-- Castor Oil Section -->
-        <tr class="castor-oil"><td>13</td><td>அமணக்கு எண்ணெய் (Castor Oil) – 200 ML Pet</td><td>80</td><td>60</td><td><select></select></td></tr>
+        <tr class="color-5">
+          <td>5</td>
+          <td>தீபம் எண்ணெய் (Deepam Oil)</td>
+          <td><select class="quantity-select" data-product-id="5"></select></td>
+          <td><select class="items-select"></select></td>
+        </tr>
 
-        <!-- Ghee Section -->
-        <tr class="ghee"><td>14</td><td>பசு நெய் (Cow Ghee) – 1 KG</td><td>650</td><td>550</td><td><select></select></td></tr>
-        <tr class="ghee"><td>15</td><td>பசு நெய் (Cow Ghee) – 1/2 KG</td><td>350</td><td>300</td><td><select></select></td></tr>
-        <tr class="ghee"><td>16</td><td>பசு நெய் (Cow Ghee) – 250 Gram</td><td>180</td><td>160</td><td><select></select></td></tr>
+        <tr class="color-1">
+          <td>6</td>
+          <td>சூரியகாந்தி எண்ணெய் (Sunflower Oil)</td>
+          <td><select class="quantity-select" data-product-id="6"></select></td>
+          <td><select class="items-select"></select></td>
+        </tr>
 
-        <!-- Rice Section -->
-        <tr class="rice"><td>17</td><td>புளுங்கல் அரிசி (Boiled Rice) – 5kg</td><td>380</td><td>350</td><td><select></select></td></tr>
-        <tr class="rice"><td>18</td><td>புளுங்கல் அரிசி (Boiled Rice) – 10kg</td><td>760</td><td>700</td><td><select></select></td></tr>
-        <tr class="rice"><td>19</td><td>புளுங்கல் அரிசி (Boiled Rice) – 26kg</td><td>2000</td><td>1820</td><td><select></select></td></tr>
+        <tr class="color-2">
+          <td>7</td>
+          <td>அமணக்கு எண்ணெய் (Castor Oil)</td>
+          <td><select class="quantity-select" data-product-id="7"></select></td>
+          <td><select class="items-select"></select></td>
+        </tr>
 
-        <tr class="rice"><td>20</td><td>பச்சரிசி (Raw Rice) – 5kg</td><td>380</td><td>350</td><td><select></select></td></tr>
-        <tr class="rice"><td>21</td><td>பச்சரிசி (Raw Rice) – 10kg</td><td>760</td><td>700</td><td><select></select></td></tr>
-        <tr class="rice"><td>22</td><td>பச்சரிசி (Raw Rice) – 26kg</td><td>2000</td><td>1820</td><td><select></select></td></tr>
+        <tr class="color-3">
+          <td>8</td>
+          <td>பசு நெய் (Cow Ghee)</td>
+          <td><select class="quantity-select" data-product-id="8"></select></td>
+          <td><select class="items-select"></select></td>
+        </tr>
 
-        <tr class="rice"><td>23</td><td>இட்லி அரிசி (Idly Rice) – 5kg</td><td>250</td><td>210</td><td><select></select></td></tr>
-        <tr class="rice"><td>24</td><td>இட்லி அரிசி (Idly Rice) – 10kg</td><td>500</td><td>420</td><td><select></select></td></tr>
+        <tr class="color-4">
+          <td>9</td>
+          <td>புழுங்கல் அரிசி (Boiled Rice)</td>
+          <td><select class="quantity-select" data-product-id="9"></select></td>
+          <td><select class="items-select"></select></td>
+        </tr>
 
-        <!-- Health Mix Section -->
-        <tr class="health-mix"><td>25</td><td>சத்து மாவு (Health Mix Powder) – 1/4kg</td><td>180</td><td>150</td><td><select></select></td></tr>
-        <tr class="health-mix"><td>26</td><td>சத்து மாவு (Health Mix Powder) – 1/2kg</td><td>350</td><td>280</td><td><select></select></td></tr>
+        <tr class="color-5">
+          <td>10</td>
+          <td>பச்சரிசி (Raw Rice)</td>
+          <td><select class="quantity-select" data-product-id="10"></select></td>
+          <td><select class="items-select"></select></td>
+        </tr>
 
-        <!-- Dal Section -->
-        <tr class="dal"><td>27</td><td>உளுந்து (Urad Dal) – 1kg</td><td>150</td><td>130</td><td><select></select></td></tr>
-        <tr class="dal"><td>28</td><td>உளுந்து (Urad Dal) – 1/2kg</td><td>90</td><td>70</td><td><select></select></td></tr>
+        <tr class="color-1">
+          <td>11</td>
+          <td>இட்லி அரிசி (Idly Rice)</td>
+          <td><select class="quantity-select" data-product-id="11"></select></td>
+          <td><select class="items-select"></select></td>
+        </tr>
+
+        <tr class="color-2">
+          <td>12</td>
+          <td>சீரகசம்பா (Seeraga Samba)</td>
+          <td><select class="quantity-select" data-product-id="12"></select></td>
+          <td><select class="items-select"></select></td>
+        </tr>
+
+        <tr class="color-3">
+          <td>13</td>
+          <td>சத்து மாவு (Health Mix Powder)</td>
+          <td><select class="quantity-select" data-product-id="13"></select></td>
+          <td><select class="items-select"></select></td>
+        </tr>
+
+        <tr class="color-4">
+          <td>14</td>
+          <td>உளுந்து (Urad Dal)</td>
+          <td><select class="quantity-select" data-product-id="14"></select></td>
+          <td><select class="items-select"></select></td>
+        </tr>
         
-        <tr class="dal"><td>29</td><td>துவரம் பருப்பு (Toor Dal) – 1kg</td><td>150</td><td>130</td><td><select></select></td></tr>
-        <tr class="dal"><td>30</td><td>துவரம் பருப்பு (Toor Dal) – 1/2kg</td><td>90</td><td>70</td><td><select></select></td></tr>
+        <tr class="color-5">
+          <td>15</td>
+          <td>துவரம் பருப்பு (Toor Dal)</td>
+          <td><select class="quantity-select" data-product-id="15"></select></td>
+          <td><select class="items-select"></select></td>
+        </tr>
 
-        <tr class="dal"><td>31</td><td>பாசி பருப்பு (Moong Dal) – 1kg</td><td>150</td><td>130</td><td><select></select></td></tr>
-        <tr class="dal"><td>32</td><td>பாசி பருப்பு (Moong Dal) – 1/2kg</td><td>90</td><td>70</td><td><select></select></td></tr>
+        <tr class="color-1">
+          <td>16</td>
+          <td>பாசி பருப்பு (Moong Dal)</td>
+          <td><select class="quantity-select" data-product-id="16"></select></td>
+          <td><select class="items-select"></select></td>
+        </tr>
 
-        <tr class="dal"><td>33</td><td>கடலை பருப்பு (Chana Dal) – 1kg</td><td>120</td><td>100</td><td><select></select></td></tr>
-        <tr class="dal"><td>34</td><td>கடலை பருப்பு (Chana Dal) – 1/2kg</td><td>60</td><td>50</td><td><select></select></td></tr>
+        <tr class="color-2">
+          <td>17</td>
+          <td>கடலை பருப்பு (Chana Dal)</td>
+          <td><select class="quantity-select" data-product-id="17"></select></td>
+          <td><select class="items-select"></select></td>
+        </tr>
 
-        <!-- Tamarind Section -->
-        <tr class="tamarind"><td>35</td><td>புளி (Tamarind) – 1 KG</td><td>240</td><td>160</td><td><select></select></td></tr>
-        <tr class="tamarind"><td>36</td><td>புளி (Tamarind) – 1/2 KG</td><td>140</td><td>90</td><td><select></select></td></tr>
-        <tr class="tamarind"><td>37</td><td>புளி (Tamarind) – 250 Gram</td><td>80</td><td>50</td><td><select></select></td></tr>
+        <tr class="color-3">
+          <td>18</td>
+          <td>புளி (Tamarind)</td>
+          <td><select class="quantity-select" data-product-id="18"></select></td>
+          <td><select class="items-select"></select></td>
+        </tr>
 
-        <!-- Appalam Section -->
-        <tr class="appalam"><td>38</td><td>அப்பளம் (Appalam) – 1 KG</td><td>450</td><td>200</td><td><select></select></td></tr>
-        <tr class="appalam"><td>39</td><td>அப்பளம் (Appalam) – 1/2 KG</td><td>250</td><td>120</td><td><select></select></td></tr>
-        <tr class="appalam"><td>40</td><td>அப்பளம் (Appalam) – 100 Gram</td><td>35</td><td>25</td><td><select></select></td></tr>
+        <tr class="color-4">
+          <td>19</td>
+          <td>அப்பளம் (Appalam)</td>
+          <td><select class="quantity-select" data-product-id="19"></select></td>
+          <td><select class="items-select"></select></td>
+        </tr>
 
-        <!-- Sugar Section -->
-        <tr class="sugar"><td>41</td><td>நாட்டு சர்க்கரை (Country Sugar) – 1 KG</td><td>130</td><td>100</td><td><select></select></td></tr>
-        <tr class="sugar"><td>42</td><td>நாட்டு சர்க்கரை (Country Sugar) – 1/2 KG</td><td>80</td><td>50</td><td><select></select></td></tr>
+        <tr class="color-5">
+          <td>20</td>
+          <td>நாட்டு சர்க்கரை (Country Sugar)</td>
+          <td><select class="quantity-select" data-product-id="20"></select></td>
+          <td><select class="items-select"></select></td>
+        </tr>
 
-        <!-- Tea Section -->
-        <tr class="tea"><td>43</td><td>வால்பாறை தேயிலை தூள் (Valparai Tea Powder) – 1/2 KG</td><td>195</td><td>170</td><td><select></select></td></tr>
-        <tr class="tea"><td>44</td><td>வால்பாறை தேயிலை தூள் (Valparai Tea Powder) – 100 Gram</td><td>90</td><td>40</td><td><select></select></td></tr>
+        <tr class="color-1">
+          <td>21</td>
+          <td>வால்பாறை தேயிலை தூள் (Valparai Tea Powder)</td>
+          <td><select class="quantity-select" data-product-id="21"></select></td>
+          <td><select class="items-select"></select></td>
+        </tr>
       </tbody>
     </table>
     <div class="customer-info">
       <div>
-          <label for="customerMobile">📱 Mobile Number *</label>
-          <input type="tel" id="customerMobile" maxlength="10" pattern="[0-9]{10}" required placeholder="Enter 10-digit mobile number">
-      </div>
-      <div>
-          <label for="customerAddress">📍 Delivery Address *</label>
+          <label for="customerAddress">🏠 Delivery Address *</label>
           <input type="text" id="customerAddress" required placeholder="Enter delivery address">
       </div>
     </div>
