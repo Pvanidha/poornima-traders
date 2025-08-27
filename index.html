@@ -287,6 +287,41 @@
       transform: scale(1.01);
       box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
+
+    /* Update the quantity container styling */
+    .quantity-container {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .quantity-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Move the add button to align with the dropdowns */
+    .add-quantity-btn {
+      margin-left: 4px;
+      width: 20px;
+      height: 20px;
+      font-size: 14px;
+    }
+
+    /* Adjust remove button size to match */
+    .remove-quantity-btn {
+      width: 20px;
+      height: 20px;
+      font-size: 14px;
+    }
+
+    /* Add flex container for the items cell */
+    .items-container {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
   </style>
   <script>
     // Fixed WhatsApp number for all messages
@@ -335,7 +370,7 @@
       6: {
         name: "சூரியகாந்தி எண்ணெய் (Sunflower Oil)",
         options: [
-          { size: "1 Lt", price: 150 }
+          { size: "1 Lt", price: 160 }
         ]
       },
       7: {
@@ -384,8 +419,8 @@
       13: {
         name: "சத்து மாவு (Health Mix Powder)",
         options: [
-          { size: "1/4kg", price: 150 },
-          { size: "1/2kg", price: 280 }
+          { size: "1/4kg", price: 130 },
+          { size: "1/2kg", price: 250 }
         ]
       },
       14: {
@@ -488,7 +523,101 @@
           select.appendChild(option);
         }
       });
+      
+      // Wrap existing quantity and items selects in containers
+      document.querySelectorAll('tr').forEach(row => {
+        const quantityCell = row.querySelector('td:nth-child(3)');
+        const itemsCell = row.querySelector('td:nth-child(4)');
+        
+        if (quantityCell && itemsCell) {
+          const quantitySelect = quantityCell.querySelector('select');
+          const itemsSelect = itemsCell.querySelector('select');
+          
+          if (quantitySelect && itemsSelect) {
+            // Create container for quantity cell
+            const quantityContainer = document.createElement('div');
+            quantityContainer.className = 'quantity-container';
+
+            // Create container for items cell
+            const itemsContainer = document.createElement('div');
+            itemsContainer.className = 'items-container';
+            
+            // Add plus button to items container
+            const addBtn = document.createElement('button');
+            addBtn.className = 'add-quantity-btn';
+            addBtn.innerHTML = '+';
+            addBtn.onclick = function() { addQuantityRow(this); };
+            
+            // Move selects to their cells
+            quantityCell.appendChild(quantityContainer);
+            quantityContainer.appendChild(quantitySelect);
+            
+            itemsCell.appendChild(itemsContainer);
+            itemsContainer.appendChild(itemsSelect);
+            itemsContainer.appendChild(addBtn);
+          }
+        }
+      });
     };
+
+    function addQuantityRow(button) {
+      const row = button.closest('tr');
+      const quantityCell = row.querySelector('td:nth-child(3)');
+      const itemsCell = row.querySelector('td:nth-child(4)');
+      
+      const quantityContainer = quantityCell.querySelector('.quantity-container');
+      const productId = quantityCell.querySelector('select').getAttribute('data-product-id');
+      
+      // Create quantity select
+      const quantitySelect = document.createElement('select');
+      quantitySelect.className = 'quantity-select';
+      quantitySelect.setAttribute('data-product-id', productId);
+      
+      // Add options to quantity select
+      const defaultOption = document.createElement('option');
+      defaultOption.value = "";
+      defaultOption.text = "Select";
+      quantitySelect.appendChild(defaultOption);
+      
+      if (productData[productId]) {
+        productData[productId].options.forEach((option, index) => {
+          const optionElement = document.createElement('option');
+          optionElement.value = index;
+          optionElement.text = `${option.size} - ₹${option.price}`;
+          quantitySelect.appendChild(optionElement);
+        });
+      }
+      
+      // Create items container
+      const itemsContainer = document.createElement('div');
+      itemsContainer.className = 'items-container';
+      
+      // Create items select
+      const itemsSelect = document.createElement('select');
+      itemsSelect.className = 'items-select';
+      
+      for(let i = 0; i <= 5; i++) {
+        const option = document.createElement('option');
+        option.value = i;
+        option.text = i;
+        itemsSelect.appendChild(option);
+      }
+      
+      // Add remove button
+      const removeBtn = document.createElement('button');
+      removeBtn.className = 'remove-quantity-btn';
+      removeBtn.innerHTML = '×';
+      removeBtn.onclick = function() {
+        quantitySelect.remove();
+        itemsContainer.remove();
+      };
+      
+      // Add new elements
+      quantityContainer.appendChild(quantitySelect);
+      itemsContainer.appendChild(itemsSelect);
+      itemsContainer.appendChild(removeBtn);
+      itemsCell.appendChild(itemsContainer);
+    }
 
     function placeOrder() {
       // Get customer details
@@ -512,17 +641,22 @@
 
       const newOrderId = window.orderStorage.lastOrderId + 1;
 
-      table.querySelectorAll('tr').forEach((row, index) => {
-        if (index === 0) return; // Skip header row
-        
-        const quantitySelect = row.querySelector('select.quantity-select');
-        const itemsSelect = row.querySelector('select.items-select');
-        
-        if (quantitySelect && itemsSelect) {
+      table.querySelectorAll('tbody tr').forEach((row) => {
+        const quantityContainer = row.querySelector('.quantity-container');
+        if (!quantityContainer) return;
+
+        const quantitySelects = quantityContainer.querySelectorAll('.quantity-select');
+        const itemsContainers = row.querySelectorAll('.items-container');
+
+        quantitySelects.forEach((quantitySelect, index) => {
+          const itemsSelect = itemsContainers[index]?.querySelector('.items-select');
+          
+          if (!quantitySelect || !itemsSelect) return;
+          
           const quantityValue = quantitySelect.value;
           const itemsValue = itemsSelect.value;
           
-          if (quantityValue !== "" && itemsValue && itemsValue !== "0" && parseInt(itemsValue) > 0) {
+          if (quantityValue !== "" && itemsValue && itemsValue !== "0") {
             hasItems = true;
             const productId = quantitySelect.getAttribute('data-product-id');
             const productInfo = productData[productId];
@@ -534,7 +668,7 @@
             totalAmount += itemTotal;
             orderList += `${itemsValue} × ${productName} - ₹${itemTotal}\n`;
           }
-        }
+        });
       });
 
       if (!hasItems) {
@@ -567,7 +701,7 @@
       window.orderStorage.orders.push(window.currentOrder);
       window.orderStorage.lastOrderId = newOrderId;
       
-      resetForm();
+      // Remove resetForm() from here since we want to keep selections on cancel
     }
 
     function sendWhatsApp() {
@@ -589,15 +723,37 @@
       const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
       window.open(whatsappUrl, '_blank');
       
+      // Reset form only after sending to WhatsApp
+      resetForm();
+      
       // Close modal after sending
       closeModal();
     }
 
     function closeModal() {
       document.getElementById('orderModal').style.display = 'none';
+      // Do not reset form when closing modal
     }
 
     function resetForm() {
+      // Remove all additional quantity rows
+      document.querySelectorAll('.quantity-container').forEach(container => {
+        // Keep only the first quantity select, remove others
+        const quantitySelects = container.querySelectorAll('.quantity-select');
+        for(let i = 1; i < quantitySelects.length; i++) {
+          quantitySelects[i].remove();
+        }
+      });
+
+      // Remove all additional items containers except the first one in each cell
+      document.querySelectorAll('td').forEach(cell => {
+        const itemsContainers = cell.querySelectorAll('.items-container');
+        for(let i = 1; i < itemsContainers.length; i++) {
+          itemsContainers[i].remove();
+        }
+      });
+
+      // Reset all remaining selects to default values
       document.querySelectorAll('select').forEach(select => {
         if (select.classList.contains('quantity-select')) {
           select.value = "";
@@ -605,6 +761,9 @@
           select.value = "0";
         }
       });
+
+      // Clear address field
+      document.getElementById('customerAddress').value = '';
     }
   </script>
 </head>
