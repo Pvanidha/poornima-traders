@@ -294,6 +294,60 @@
 
     // Product data with different quantity options and prices
     const productData = {
+      23: {
+        name: "புலுங்கல் அரிசி (Pulungal Arisi)",
+        options: [
+          { size: "26kg", price: 2100 }
+        ]
+      },
+      24: {
+        name: "பச்சரிசி (Pacharisi)",
+        options: [
+          { size: "26kg", price: 2100 }
+        ]
+      },
+      25: {
+        name: "இட்லி அரிசி (Idly Arisi)",
+        options: [
+          { size: "26kg", price: 2100 }
+        ]
+      },
+      26: {
+        name: "சீரகச்சம்பா (Seeraga Samba)",
+        options: [
+          { size: "26kg", price: 2100 }
+        ]
+      },
+      27: {
+        name: "பாஸ்மதி அரிசி (Basmathi Arisi)",
+        options: [
+          { size: "26kg", price: 2100 }
+        ]
+      },
+      28: {
+        name: "உளுந்து (Urad Dal)",
+        options: [
+          { size: "1kg", price: 150 }
+        ]
+      },
+      29: {
+        name: "கடலை பருப்பு (Kadalai Paruppu)",
+        options: [
+          { size: "1kg", price: 150 }
+        ]
+      },
+      30: {
+        name: "பாசி பருப்பு (Paasi Paruppu)",
+        options: [
+          { size: "1kg", price: 150 }
+        ]
+      },
+      31: {
+        name: "துவரம் பருப்பு (Thuvaram Paruppu)",
+        options: [
+          { size: "1kg", price: 150 }
+        ]
+      },
       1: {
         name: "மஞ்சள் தூள் (Manjal Thool)",
         options: [
@@ -348,7 +402,7 @@
         options: [
           { size: "1 KG", price: 800 },
           { size: "1/2 KG", price: 400 },
-          { size: "250 Gram", price: 200 }
+          { size: "200 Gram", price: 200 }
         ]
       },
       9: {
@@ -640,71 +694,134 @@
           <th>No of Items</th>
         </tr>
       <tbody>
-        <tr class="color-2">
+        <tr class="color-1">
           <td>1</td>
+          <td>புலுங்கல் அரிசி (Pulungal Arisi)</td>
+          <td><select class="quantity-select" data-product-id="23"></select></td>
+          <td><select class="items-select"></select></td>
+        </tr>
+
+        <tr class="color-2">
+          <td>2</td>
+          <td>பச்சரிசி (Pacharisi)</td>
+          <td><select class="quantity-select" data-product-id="24"></select></td>
+          <td><select class="items-select"></select></td>
+        </tr>
+
+        <tr class="color-3">
+          <td>3</td>
+          <td>இட்லி அரிசி (Idly Arisi)</td>
+          <td><select class="quantity-select" data-product-id="25"></select></td>
+          <td><select class="items-select"></select></td>
+        </tr>
+
+        <tr class="color-4">
+          <td>4</td>
+          <td>சீரகச்சம்பா (Seeraga Samba)</td>
+          <td><select class="quantity-select" data-product-id="26"></select></td>
+          <td><select class="items-select"></select></td>
+        </tr>
+
+        <tr class="color-5">
+          <td>5</td>
+          <td>பாஸ்மதி அரிசி (Basmathi Arisi)</td>
+          <td><select class="quantity-select" data-product-id="27"></select></td>
+          <td><select class="items-select"></select></td>
+        </tr>
+
+        <tr class="color-1">
+          <td>6</td>
+          <td>உளுந்து (Urad Dal)</td>
+          <td><select class="quantity-select" data-product-id="28"></select></td>
+          <td><select class="items-select"></select></td>
+        </tr>
+
+        <tr class="color-2">
+          <td>7</td>
+          <td>கடலை பருப்பு (Kadalai Paruppu)</td>
+          <td><select class="quantity-select" data-product-id="29"></select></td>
+          <td><select class="items-select"></select></td>
+        </tr>
+
+        <tr class="color-3">
+          <td>8</td>
+          <td>பாசி பருப்பு (Paasi Paruppu)</td>
+          <td><select class="quantity-select" data-product-id="30"></select></td>
+          <td><select class="items-select"></select></td>
+        </tr>
+
+        <tr class="color-4">
+          <td>9</td>
+          <td>துவரம் பருப்பு (Thuvaram Paruppu)</td>
+          <td><select class="quantity-select" data-product-id="31"></select></td>
+          <td><select class="items-select"></select></td>
+        </tr>
+
+        <tr class="color-2">
+          <td>10</td>
           <td>நல்லெண்ணெய் (Gingily Oil)</td>
           <td><select class="quantity-select" data-product-id="2"></select></td>
           <td><select class="items-select"></select></td>
         </tr>
 
         <tr class="color-3">
-          <td>2</td>
+          <td>11</td>
           <td>கடலை எண்ணெய் (Groundnut Oil)</td>
           <td><select class="quantity-select" data-product-id="3"></select></td>
           <td><select class="items-select"></select></td>
         </tr>
 
         <tr class="color-4">
-          <td>3</td>
+          <td>12</td>
           <td>தேங்காய் எண்ணெய் (Coconut Oil)</td>
           <td><select class="quantity-select" data-product-id="4"></select></td>
           <td><select class="items-select"></select></td>
         </tr>
 
         <tr class="color-5">
-          <td>4</td>
+          <td>13</td>
           <td>தீபம் எண்ணெய் (Deepam Oil)</td>
           <td><select class="quantity-select" data-product-id="5"></select></td>
           <td><select class="items-select"></select></td>
         </tr>
 
         <tr class="color-2">
-          <td>5</td>
+          <td>14</td>
           <td>அமணக்கு எண்ணெய் (Castor Oil)</td>
           <td><select class="quantity-select" data-product-id="7"></select></td>
           <td><select class="items-select"></select></td>
         </tr>
 
         <tr class="color-3">
-          <td>6</td>
+          <td>15</td>
           <td>இலுப்பை எண்ணெய் (Illuppai oil)</td>
           <td><select class="quantity-select" data-product-id="22"></select></td>
           <td><select class="items-select"></select></td>
         </tr>
 
         <tr class="color-4">
-          <td>7</td>
+          <td>16</td>
           <td>பசு நெய் (Cow Ghee)</td>
           <td><select class="quantity-select" data-product-id="8"></select></td>
           <td><select class="items-select"></select></td>
         </tr>
 
         <tr class="color-5">
-          <td>8</td>
+          <td>17</td>
           <td>அப்பளம் (Appalam)</td>
           <td><select class="quantity-select" data-product-id="19"></select></td>
           <td><select class="items-select"></select></td>
         </tr>
 
         <tr class="color-1">
-          <td>9</td>
+          <td>18</td>
           <td>நாட்டு சர்க்கரை (Country Sugar)</td>
           <td><select class="quantity-select" data-product-id="20"></select></td>
           <td><select class="items-select"></select></td>
         </tr>
 
         <tr class="color-2">
-          <td>10</td>
+          <td>19</td>
           <td>வால்பாறை தேயிலை தூள் (Valparai Tea Powder)</td>
           <td><select class="quantity-select" data-product-id="21"></select></td>
           <td><select class="items-select"></select></td>
